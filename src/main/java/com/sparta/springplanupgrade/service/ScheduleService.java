@@ -4,7 +4,6 @@ import com.sparta.springplanupgrade.dto.ScheduleRequestDto;
 import com.sparta.springplanupgrade.dto.ScheduleResponseDto;
 import com.sparta.springplanupgrade.entity.Schedule;
 import com.sparta.springplanupgrade.repository.ScheduleRepository;
-import org.apache.catalina.Manager;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,8 +24,18 @@ public class ScheduleService {
     }
 
     public ScheduleResponseDto getSchedule(Long id) {
-       Schedule getSchedule = scheduleRepository.findById(id)
-               .orElseThrow();
+       Schedule getSchedule = scheduleRepository.findById(id).orElseThrow();
+        return new ScheduleResponseDto(getSchedule);
+    }
+
+    public ScheduleResponseDto upgradeSchedule(Long id, ScheduleRequestDto scheduleRequestDto) {
+        Schedule getSchedule = scheduleRepository.findById(id).orElseThrow();
+
+        getSchedule.setUserName(scheduleRequestDto.getUserName());
+        getSchedule.setContent(scheduleRequestDto.getContent());
+        getSchedule.setTitle(scheduleRequestDto.getTitle());
+        scheduleRepository.save(getSchedule);
+
         return new ScheduleResponseDto(getSchedule);
     }
 }

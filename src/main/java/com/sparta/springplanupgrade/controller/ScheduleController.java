@@ -25,10 +25,17 @@ public class ScheduleController {
         return ResponseEntity.ok(savedSchedule);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> getSchedule(@PathVariable Long id){
         ScheduleResponseDto getSchedule = scheduleService.getSchedule(id);
         return ResponseEntity.ok(getSchedule);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> upgradeSchedule(
+            @PathVariable Long id , @RequestBody ScheduleRequestDto scheduleRequestDto){
+        ScheduleResponseDto upgradeSchedule = scheduleService.upgradeSchedule(id,scheduleRequestDto);
+        return ResponseEntity.ok(upgradeSchedule);
     }
 
 }
