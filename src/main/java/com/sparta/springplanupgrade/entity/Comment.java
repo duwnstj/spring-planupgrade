@@ -1,6 +1,5 @@
 package com.sparta.springplanupgrade.entity;
 
-import com.sparta.springplanupgrade.dto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,15 +9,15 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Getter
 @Setter
 @Entity
-@Table(name = "scedules")
+@Table(name = "comments")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Schedule {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +27,7 @@ public class Schedule {
     private String userName;
 
     @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false)
     private String content;
-
 
     @CreationTimestamp
     @Column(updatable = false, nullable = false)
@@ -42,13 +37,8 @@ public class Schedule {
     @Column(nullable = false)
     private LocalDateTime updateAt;
 
-    @OneToMany(mappedBy = "schedule")
-    private List<Comment> comments;
+    @ManyToOne
+    @JoinColumn(name = "scheduleId")
+    private Schedule schedule;
 
-
-    public Schedule(ScheduleRequestDto scheduleRequestDto) {
-        this.userName = scheduleRequestDto.getUserName();
-        this.content = scheduleRequestDto.getContent();
-        this.title = scheduleRequestDto.getTitle();
-    }
 }
