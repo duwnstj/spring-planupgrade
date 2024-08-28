@@ -49,4 +49,10 @@ public class Comment {
         this.content = commentRequestDto.getContent();
         this.schedule = scuedule;
     }
+
+    public void update(CommentRequestDto requestDto) {
+        this.userName = requestDto.getUserName();
+        this.content = requestDto.getContent();
+        
+    }
 }

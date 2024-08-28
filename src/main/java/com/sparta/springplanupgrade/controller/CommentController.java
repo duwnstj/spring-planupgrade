@@ -41,4 +41,11 @@ public class CommentController {
 
         return ResponseEntity.ok(inquires);
     }
+
+    // 댓글 수정
+    @PutMapping("/{commentId}")
+    public ResponseEntity<CommentResponseDto> upgradeComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto) {
+        CommentResponseDto upgradeComment = commentService.upgradeComment(commentId, requestDto);
+        return ResponseEntity.ok(upgradeComment);
+    }
 }
