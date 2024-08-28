@@ -54,7 +54,7 @@ public class CommentService {
     // 댓글 수정
     public CommentResponseDto upgradeComment(Long commentId, CommentRequestDto requestDto) {
         Comment updateComment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 댓글이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("수정할 댓글이 없습니다."));
         // Comment 엔티티에 수정한 requestDto 반영
         updateComment.update(requestDto);
 
@@ -64,5 +64,12 @@ public class CommentService {
         //저장한 댓글을 기반으로 ResponseDto로 변환해서 리턴
         return new CommentResponseDto(saveComment);
 
+    }
+
+    // 댓글 삭제
+    public void deleteComment(Long commentId) {
+        Comment findComment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("삭제할 댓글이 없습니다."));
+        commentRepository.delete(findComment);
     }
 }

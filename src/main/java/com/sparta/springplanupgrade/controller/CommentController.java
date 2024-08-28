@@ -48,4 +48,10 @@ public class CommentController {
         CommentResponseDto upgradeComment = commentService.upgradeComment(commentId, requestDto);
         return ResponseEntity.ok(upgradeComment);
     }
+
+    //댓글 삭제
+    @DeleteMapping("/{commentId}")
+    public void deleteComment(@PathVariable Long commentId) {
+        commentService.deleteComment(commentId);
+    }
 }
