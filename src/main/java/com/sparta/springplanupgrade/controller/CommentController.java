@@ -6,6 +6,8 @@ import com.sparta.springplanupgrade.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
@@ -30,5 +32,13 @@ public class CommentController {
         CommentResponseDto inquire = commentService.inquireComment(id);
 
         return ResponseEntity.ok(inquire);
+    }
+
+    //일정 아이디를 기준으로 댓글 전체 조회
+    @GetMapping("/schedule/{scheduleId}")
+    public ResponseEntity<List<CommentResponseDto>> inquereComments(@PathVariable(name = "scheduleId") Long scheduleId) {
+        List<CommentResponseDto> inquires = commentService.inquireComments(scheduleId);
+
+        return ResponseEntity.ok(inquires);
     }
 }
