@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CommentService {
-    private CommentRepository commentRepository;
-    private ScheduleRepository scheduleRepository;
+    private final CommentRepository commentRepository;
+    private final ScheduleRepository scheduleRepository;
 
 
     public CommentService(CommentRepository commentRepository, ScheduleRepository scheduleRepository) {
@@ -27,5 +27,11 @@ public class CommentService {
 
         return new CommentResponseDto(saveComment);
 
+    }
+
+    public CommentResponseDto inquireComment(Long id) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("선택한 댓글이 없습니다."));
+        return new CommentResponseDto(comment);
     }
 }

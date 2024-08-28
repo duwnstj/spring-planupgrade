@@ -2,7 +2,6 @@ package com.sparta.springplanupgrade.controller;
 
 import com.sparta.springplanupgrade.dto.CommentRequestDto;
 import com.sparta.springplanupgrade.dto.CommentResponseDto;
-import com.sparta.springplanupgrade.entity.Comment;
 import com.sparta.springplanupgrade.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +24,11 @@ public class CommentController {
         return ResponseEntity.ok(saveComment);
     }
 
+    // 댓글 아이디를 기준으로 단건 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<CommentResponseDto> inquireComment(@PathVariable(name = "id") Long id) {
+        CommentResponseDto inquire = commentService.inquireComment(id);
 
+        return ResponseEntity.ok(inquire);
+    }
 }
