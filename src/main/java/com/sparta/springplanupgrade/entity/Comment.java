@@ -1,5 +1,7 @@
 package com.sparta.springplanupgrade.entity;
 
+import com.sparta.springplanupgrade.dto.CommentRequestDto;
+import com.sparta.springplanupgrade.dto.CommentResponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,4 +43,10 @@ public class Comment {
     @JoinColumn(name = "scheduleId")
     private Schedule schedule;
 
+
+    public Comment(CommentRequestDto commentRequestDto, Schedule scuedule) {
+        this.userName = commentRequestDto.getUserName();
+        this.content = commentRequestDto.getContent();
+        this.schedule = scuedule;
+    }
 }
