@@ -1,6 +1,4 @@
-package com.sparta.springplanupgrade.dto;
-
-import com.sparta.springplanupgrade.entity.Comment;
+package com.sparta.springplanupgrade.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

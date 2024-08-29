@@ -1,17 +1,19 @@
 package com.sparta.springplanupgrade.service;
 
-import com.sparta.springplanupgrade.dto.CommentRequestDto;
-import com.sparta.springplanupgrade.dto.CommentResponseDto;
+import com.sparta.springplanupgrade.dto.request.CommentRequestDto;
+import com.sparta.springplanupgrade.dto.response.CommentResponseDto;
 import com.sparta.springplanupgrade.entity.Comment;
 import com.sparta.springplanupgrade.entity.Schedule;
 import com.sparta.springplanupgrade.repository.CommentRepository;
 import com.sparta.springplanupgrade.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ScheduleRepository scheduleRepository;
@@ -22,6 +24,7 @@ public class CommentService {
         this.scheduleRepository = scheduleRepository;
     }
 
+    @Transactional
     // 댓글 저장 로직
     public CommentResponseDto createComment(Long scheduleId, CommentRequestDto commentRequestDto) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
@@ -51,6 +54,7 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     // 댓글 수정
     public CommentResponseDto upgradeComment(Long commentId, CommentRequestDto requestDto) {
         Comment updateComment = commentRepository.findById(commentId)

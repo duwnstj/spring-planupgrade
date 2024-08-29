@@ -1,7 +1,6 @@
 package com.sparta.springplanupgrade.entity;
 
-import com.sparta.springplanupgrade.dto.CommentRequestDto;
-import com.sparta.springplanupgrade.dto.CommentResponseDto;
+import com.sparta.springplanupgrade.dto.request.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,6 +52,6 @@ public class Comment {
     public void update(CommentRequestDto requestDto) {
         this.userName = requestDto.getUserName();
         this.content = requestDto.getContent();
-        
+
     }
 }

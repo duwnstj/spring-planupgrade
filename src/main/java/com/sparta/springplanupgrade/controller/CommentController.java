@@ -1,7 +1,7 @@
 package com.sparta.springplanupgrade.controller;
 
-import com.sparta.springplanupgrade.dto.CommentRequestDto;
-import com.sparta.springplanupgrade.dto.CommentResponseDto;
+import com.sparta.springplanupgrade.dto.request.CommentRequestDto;
+import com.sparta.springplanupgrade.dto.response.CommentResponseDto;
 import com.sparta.springplanupgrade.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
+
 public class CommentController {
     private final CommentService commentService;
 

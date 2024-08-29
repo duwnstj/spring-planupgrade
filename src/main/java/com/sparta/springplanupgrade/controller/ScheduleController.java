@@ -1,14 +1,18 @@
 package com.sparta.springplanupgrade.controller;
 
-import com.sparta.springplanupgrade.dto.ScheduleRequestDto;
-import com.sparta.springplanupgrade.dto.ScheduleResponseDto;
-import com.sparta.springplanupgrade.entity.Schedule;
+import com.sparta.springplanupgrade.dto.request.ScheduleSaveRequestDto;
+import com.sparta.springplanupgrade.dto.request.ScheduleUpdateRequestDto;
+import com.sparta.springplanupgrade.dto.response.ScheduleDetailResponseDto;
+import com.sparta.springplanupgrade.dto.response.ScheduleSaveResponseDto;
+import com.sparta.springplanupgrade.dto.response.ScheduleUpdateResponseDto;
 import com.sparta.springplanupgrade.service.ScheduleService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
+
 @RequestMapping("/api/schedules")
 public class ScheduleController {
 
@@ -19,22 +23,28 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
+    // 일정 저장
+
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto scheduleRequestDto){
-        ScheduleResponseDto savedSchedule = scheduleService.saveSchedule(scheduleRequestDto);
-        return ResponseEntity.ok(savedSchedule);
+    public ResponseEntity<ScheduleSaveResponseDto> createSchedule(@RequestBody ScheduleSaveRequestDto scheduleRequestDto) {
+        ScheduleSaveResponseDto savedSchedule = scheduleService.saveSchedule(scheduleRequestDto);
+        URI location = URI.create("/api/schedules/" + savedSchedule.getId());
+        return ResponseEntity.created(location).body(savedSchedule);
     }
 
+    // 일정 단건 조회
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> getSchedule(@PathVariable Long id){
-        ScheduleResponseDto getSchedule = scheduleService.getSchedule(id);
+    public ResponseEntity<ScheduleDetailResponseDto> getSchedule(@PathVariable Long id) {
+        ScheduleDetailResponseDto getSchedule = scheduleService.getSchedule(id);
         return ResponseEntity.ok(getSchedule);
     }
 
+    //일정 수정
+
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> upgradeSchedule(
-            @PathVariable Long id , @RequestBody ScheduleRequestDto scheduleRequestDto){
-        ScheduleResponseDto upgradeSchedule = scheduleService.upgradeSchedule(id,scheduleRequestDto);
+    public ResponseEntity<ScheduleUpdateResponseDto> upgradeSchedule(
+            @PathVariable Long id, @RequestBody ScheduleUpdateRequestDto updateRequestDto) {
+        ScheduleUpdateResponseDto upgradeSchedule = scheduleService.upgradeSchedule(id, updateRequestDto);
         return ResponseEntity.ok(upgradeSchedule);
     }
 

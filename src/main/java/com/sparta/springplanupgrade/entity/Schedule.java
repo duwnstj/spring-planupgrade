@@ -1,6 +1,6 @@
 package com.sparta.springplanupgrade.entity;
 
-import com.sparta.springplanupgrade.dto.ScheduleRequestDto;
+import com.sparta.springplanupgrade.dto.request.ScheduleSaveRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +22,7 @@ public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
@@ -46,9 +47,15 @@ public class Schedule {
     private List<Comment> comments;
 
 
-    public Schedule(ScheduleRequestDto scheduleRequestDto) {
+    public Schedule(ScheduleSaveRequestDto scheduleRequestDto) {
         this.userName = scheduleRequestDto.getUserName();
         this.content = scheduleRequestDto.getContent();
         this.title = scheduleRequestDto.getTitle();
+    }
+
+    public void update(String content, String title, String userName) {
+        this.title = title;
+        this.content = content;
+        this.userName = userName;
     }
 }
