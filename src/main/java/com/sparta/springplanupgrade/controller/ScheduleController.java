@@ -43,7 +43,7 @@ public class ScheduleController {
 
     // 일정 전체 조회
     @GetMapping("/schedules")
-    public Page<ScheduleSimpleResponstDto> getSchedules(
+    public Page<ScheduleDetailResponseDto> getSchedules(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
@@ -57,6 +57,11 @@ public class ScheduleController {
             @PathVariable Long id, @RequestBody ScheduleUpdateRequestDto updateRequestDto) {
         ScheduleUpdateResponseDto upgradeSchedule = scheduleService.upgradeSchedule(id, updateRequestDto);
         return ResponseEntity.ok(upgradeSchedule);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteSchedule(@PathVariable Long id) {
+        scheduleService.deleteSchedule(id);
     }
 
 }

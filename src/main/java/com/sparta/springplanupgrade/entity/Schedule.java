@@ -43,7 +43,7 @@ public class Schedule {
     @Column(nullable = false)
     private LocalDateTime updateAt;
 
-    @OneToMany(mappedBy = "schedule")
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
 
