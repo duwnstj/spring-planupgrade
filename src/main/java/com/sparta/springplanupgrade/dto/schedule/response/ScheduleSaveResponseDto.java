@@ -1,8 +1,7 @@
-package com.sparta.springplanupgrade.dto.response;
+package com.sparta.springplanupgrade.dto.schedule.response;
 
 import com.sparta.springplanupgrade.entity.Schedule;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 

@@ -1,7 +1,7 @@
 package com.sparta.springplanupgrade.service;
 
-import com.sparta.springplanupgrade.dto.request.CommentRequestDto;
-import com.sparta.springplanupgrade.dto.response.CommentResponseDto;
+import com.sparta.springplanupgrade.dto.comment.request.CommentRequestDto;
+import com.sparta.springplanupgrade.dto.comment.response.CommentResponseDto;
 import com.sparta.springplanupgrade.entity.Comment;
 import com.sparta.springplanupgrade.entity.Schedule;
 import com.sparta.springplanupgrade.repository.CommentRepository;
@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 
 public class CommentService {
     private final CommentRepository commentRepository;
@@ -54,8 +55,9 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
+
     // 댓글 수정
+    @Transactional
     public CommentResponseDto upgradeComment(Long commentId, CommentRequestDto requestDto) {
         Comment updateComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("수정할 댓글이 없습니다."));
@@ -71,9 +73,11 @@ public class CommentService {
     }
 
     // 댓글 삭제
+    @Transactional
     public void deleteComment(Long commentId) {
-        Comment findComment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("삭제할 댓글이 없습니다."));
-        commentRepository.delete(findComment);
+        if (!commentRepository.existsById(commentId)) {
+            throw new NullPointerException("삭제할 아이디가 존재하지않습니다.");
+        }
+        commentRepository.deleteById(commentId);
     }
 }

@@ -1,12 +1,16 @@
 package com.sparta.springplanupgrade.service;
 
-import com.sparta.springplanupgrade.dto.request.ScheduleSaveRequestDto;
-import com.sparta.springplanupgrade.dto.request.ScheduleUpdateRequestDto;
-import com.sparta.springplanupgrade.dto.response.ScheduleDetailResponseDto;
-import com.sparta.springplanupgrade.dto.response.ScheduleSaveResponseDto;
-import com.sparta.springplanupgrade.dto.response.ScheduleUpdateResponseDto;
+import com.sparta.springplanupgrade.dto.schedule.request.ScheduleSaveRequestDto;
+import com.sparta.springplanupgrade.dto.schedule.request.ScheduleUpdateRequestDto;
+import com.sparta.springplanupgrade.dto.schedule.response.ScheduleDetailResponseDto;
+import com.sparta.springplanupgrade.dto.schedule.response.ScheduleSaveResponseDto;
+import com.sparta.springplanupgrade.dto.schedule.response.ScheduleSimpleResponstDto;
+import com.sparta.springplanupgrade.dto.schedule.response.ScheduleUpdateResponseDto;
 import com.sparta.springplanupgrade.entity.Schedule;
 import com.sparta.springplanupgrade.repository.ScheduleRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,5 +56,15 @@ public class ScheduleService {
                 updateRequestDto.getUserName()
         );
         return new ScheduleUpdateResponseDto(getSchedule.getId());
+    }
+
+    public Page<ScheduleSimpleResponstDto> getSchedules(int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+
+        Page<Schedule> schedules = scheduleRepository.findAllOrderByUpdateAtdesc(pageable);
+
+        return schedules.map(schedule -> new ScheduleSimpleResponstDto(
+                schedule.getTitle()
+        ));
     }
 }

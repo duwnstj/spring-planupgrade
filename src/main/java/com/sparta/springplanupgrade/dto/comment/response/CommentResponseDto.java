@@ -1,4 +1,4 @@
-package com.sparta.springplanupgrade.dto.response;
+package com.sparta.springplanupgrade.dto.comment.response;
 
 import com.sparta.springplanupgrade.entity.Comment;
 import lombok.Getter;

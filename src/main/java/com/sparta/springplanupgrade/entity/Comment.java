@@ -1,6 +1,6 @@
 package com.sparta.springplanupgrade.entity;
 
-import com.sparta.springplanupgrade.dto.request.CommentRequestDto;
+import com.sparta.springplanupgrade.dto.comment.request.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,15 +38,15 @@ public class Comment {
     @Column(nullable = false)
     private LocalDateTime updateAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "scheduleId")
     private Schedule schedule;
 
 
-    public Comment(CommentRequestDto commentRequestDto, Schedule scuedule) {
+    public Comment(CommentRequestDto commentRequestDto, Schedule schedule) {
         this.userName = commentRequestDto.getUserName();
         this.content = commentRequestDto.getContent();
-        this.schedule = scuedule;
+        this.schedule = schedule;
     }
 
     public void update(CommentRequestDto requestDto) {

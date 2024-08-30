@@ -1,6 +1,6 @@
 package com.sparta.springplanupgrade.entity;
 
-import com.sparta.springplanupgrade.dto.request.ScheduleSaveRequestDto;
+import com.sparta.springplanupgrade.dto.schedule.request.ScheduleSaveRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

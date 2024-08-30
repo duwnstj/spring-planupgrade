@@ -1,11 +1,13 @@
 package com.sparta.springplanupgrade.controller;
 
-import com.sparta.springplanupgrade.dto.request.ScheduleSaveRequestDto;
-import com.sparta.springplanupgrade.dto.request.ScheduleUpdateRequestDto;
-import com.sparta.springplanupgrade.dto.response.ScheduleDetailResponseDto;
-import com.sparta.springplanupgrade.dto.response.ScheduleSaveResponseDto;
-import com.sparta.springplanupgrade.dto.response.ScheduleUpdateResponseDto;
+import com.sparta.springplanupgrade.dto.schedule.request.ScheduleSaveRequestDto;
+import com.sparta.springplanupgrade.dto.schedule.request.ScheduleUpdateRequestDto;
+import com.sparta.springplanupgrade.dto.schedule.response.ScheduleDetailResponseDto;
+import com.sparta.springplanupgrade.dto.schedule.response.ScheduleSaveResponseDto;
+import com.sparta.springplanupgrade.dto.schedule.response.ScheduleSimpleResponstDto;
+import com.sparta.springplanupgrade.dto.schedule.response.ScheduleUpdateResponseDto;
 import com.sparta.springplanupgrade.service.ScheduleService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,15 @@ public class ScheduleController {
     public ResponseEntity<ScheduleDetailResponseDto> getSchedule(@PathVariable Long id) {
         ScheduleDetailResponseDto getSchedule = scheduleService.getSchedule(id);
         return ResponseEntity.ok(getSchedule);
+    }
+
+    // 일정 전체 조회
+    @GetMapping("/schedules")
+    public Page<ScheduleSimpleResponstDto> getSchedules(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return scheduleService.getSchedules(page, size);
     }
 
     //일정 수정
