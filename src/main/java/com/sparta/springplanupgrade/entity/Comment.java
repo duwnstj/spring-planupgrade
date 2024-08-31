@@ -39,7 +39,7 @@ public class Comment {
     private LocalDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "scheduleId")
+    @JoinColumn(name = "scheduleId", nullable = false)
     private Schedule schedule;
 
 
