@@ -20,14 +20,4 @@ public class ScheduleSaveResponseDto {
     private final LocalDateTime updateAt;
 
 
-    public ScheduleSaveResponseDto(Schedule savedSchedule) {
-        this.id = savedSchedule.getId();
-        this.user = savedSchedule.getUser();
-        this.title = savedSchedule.getTitle();
-        this.content = savedSchedule.getContent();
-        this.createAt = savedSchedule.getCreateAt();
-        this.updateAt = savedSchedule.getUpdateAt();
-    }
-
-
 }

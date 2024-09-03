@@ -24,8 +24,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String userName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private String content;
@@ -43,14 +44,13 @@ public class Comment {
     private Schedule schedule;
 
 
-    public Comment(CommentRequestDto commentRequestDto, Schedule schedule) {
-        this.userName = commentRequestDto.getUserName();
-        this.content = commentRequestDto.getContent();
+    public Comment(String content, User user, Schedule schedule) {
+        this.user = user;
+        this.content = content;
         this.schedule = schedule;
     }
 
     public void update(CommentRequestDto requestDto) {
-        this.userName = requestDto.getUserName();
         this.content = requestDto.getContent();
 
     }

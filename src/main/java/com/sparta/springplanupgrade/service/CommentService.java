@@ -2,10 +2,13 @@ package com.sparta.springplanupgrade.service;
 
 import com.sparta.springplanupgrade.dto.comment.request.CommentRequestDto;
 import com.sparta.springplanupgrade.dto.comment.response.CommentResponseDto;
+import com.sparta.springplanupgrade.dto.user.UserDto;
 import com.sparta.springplanupgrade.entity.Comment;
 import com.sparta.springplanupgrade.entity.Schedule;
+import com.sparta.springplanupgrade.entity.User;
 import com.sparta.springplanupgrade.repository.CommentRepository;
 import com.sparta.springplanupgrade.repository.ScheduleRepository;
+import com.sparta.springplanupgrade.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +20,13 @@ import java.util.stream.Collectors;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
 
-    public CommentService(CommentRepository commentRepository, ScheduleRepository scheduleRepository) {
+    public CommentService(CommentRepository commentRepository, ScheduleRepository scheduleRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.scheduleRepository = scheduleRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
@@ -29,10 +34,22 @@ public class CommentService {
     public CommentResponseDto createComment(Long scheduleId, CommentRequestDto commentRequestDto) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("선택한 일정이 없습니다."));
-        Comment comment = new Comment(commentRequestDto, schedule);
-        Comment saveComment = commentRepository.save(comment);
+        User user = userRepository.findById(commentRequestDto.getUserId())
+                .orElseThrow(() -> new NullPointerException("User not found"));
+        Comment newComment = new Comment(
+                commentRequestDto.getContent(),
+                user,
+                schedule
+        );
+        Comment saveComment = commentRepository.save(newComment);
 
-        return new CommentResponseDto(saveComment);
+        return new CommentResponseDto(
+                saveComment.getId(),
+                new UserDto(user.getId(), user.getUserName(), user.getEmail()),
+                saveComment.getContent(),
+                saveComment.getCreateAt(),
+                saveComment.getUpdateAt()
+        );
 
     }
 

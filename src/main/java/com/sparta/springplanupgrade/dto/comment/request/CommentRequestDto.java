@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CommentRequestDto {
-    private String userName;
+    private Long userId;
     private String content;
 
 
